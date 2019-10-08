@@ -1,3 +1,4 @@
+//intializing everything to start the game
 let Application = PIXI.Application;
 let Sprite = PIXI.Sprite;
 let pre = PIXI.loader;
@@ -9,19 +10,20 @@ let game = new Application({
     width: 600});
 var player;
 var state;
-var counterX;
-counterX = 1;
 
 document.body.appendChild(game.view);
+//adding the player, game, welcome screen, credits, and death screen before
 pre.add("player.png");
 pre.add("game.png");
 pre.add("WelcomeScreen.png");
 pre.add("credits.png");
 pre.add("blowup.png");
+
+//loading the stage
 pre.load(setStage);
     
+//adding all the instructions, needed to make multiple of them due to the fact that align content didnt work
 let instructions = new PIXI.Text('Press 2 for Instructions', {fontFamily : 'Arial', fontSize: 15, fill : 0x000000, visible : true});
-
 let instructionsReal1 = new PIXI.Text('Instructions: Take your hot air balloon to the other side of the castle.' , {fontFamily : 'Arial', fontSize: 15, fill : 0x000000, visible : true});
 let instructionsReal2 = new PIXI.Text('Watch out for obsticles!' , {fontFamily : 'Arial', fontSize: 15, fill : 0x000000, visible : true});
 let instructionsReal3 = new PIXI.Text('If you hit a bird, tree, or the castle you will have to restart. (you can hit the clouds).', {fontFamily : 'Arial', fontSize: 15, fill : 0x000000, visible : true});
@@ -33,110 +35,111 @@ let instructionsReal8 = new PIXI.Text('S: Move 1 Down (and 1 Right)', {fontFamil
 let instructionsReal9 = new PIXI.Text('D: Move 1 Right', {fontFamily : 'Arial', fontSize: 15, fill : 0x000000, visible : true});
 
 
-
+//load startgame text and welcomescreen text
 let welcomeScreenText = new PIXI.Text('Press 1 to go to Welcome Screen', {fontFamily : 'Arial', fontSize: 15, fill : 0x000000, visible : true});
-
 let startGame = new PIXI.Text('Press 1 to Start Game', {fontFamily : 'Arial', fontSize: 15, fill : 0x000000, visible : true});
 
 
 
-function setStage() {
-background = new Sprite(resources["game.png"].texture);
-player = new Sprite(resources["player.png"].texture);
-welcomeScreen = new Sprite(resources["WelcomeScreen.png"].texture);
-credits = new Sprite(resources["credits.png"].texture);
-gameOver = new Sprite(resources["blowup.png"].texture);
+function setStage() 
+{
+    //load some basic png's
+    background = new Sprite(resources["game.png"].texture);
+    player = new Sprite(resources["player.png"].texture);
+    welcomeScreen = new Sprite(resources["WelcomeScreen.png"].texture);
+    credits = new Sprite(resources["credits.png"].texture);
+    gameOver = new Sprite(resources["blowup.png"].texture);
 
-startGame.position.set(220, 319);
-game.stage.addChild(startGame);
+    //add the startGame and instructions text on the welcome screen
+    startGame.position.set(220, 319);
+    game.stage.addChild(startGame);
+    instructions.position.set(220, 382);
+    game.stage.addChild(instructions);
     
-instructions.position.set(220, 382);
-game.stage.addChild(instructions);
-    
-background.x = 0;
-background.y = 0;
-player.x = 0;
-player.y = 300;
-player.vx = 0;
-player.vy = 0;
-welcomeScreen.x = 0;
-welcomeScreen.y = 0;
-
-game.stage.addChild( welcomeScreen );
-    
-let aKey = keyboard( 65 );
-let dKey = keyboard( 68 );
-let wKey = keyboard( 87 );
-let sKey = keyboard( 83 );
-let qKey = keyboard(81);
-let enterKey = keyboard( 13 );
-    
-    
+    //initialize their location
+    background.x = 0;
+    background.y = 0;
     player.x = 0;
-player.y = 300; 
-qKey.press = () => {
-  player.x = player.x + 50;
-    player.y = player.y - 100;
-    //console.log("Player X = " + player.x);
-    //console.log("Player Y = " + player.y);
-};
+    player.y = 300;
+    player.vx = 0;
+    player.vy = 0;
+    welcomeScreen.x = 0;
+    welcomeScreen.y = 0;
+    game.stage.addChild( welcomeScreen );
     
-wKey.press = () => {
-  player.x = player.x + 50;
-    player.y = player.y + 100;
-    //console.log("Player X = " + player.x);
-    //console.log("Player Y = " + player.y);
-};
-
-aKey.press = () => {
-  player.x = player.x + 50;
-    player.y = player.y - 50;
-    //console.log("Player X = " + player.x);
-    //console.log("Player Y = " + player.y);
-};
+    //initialize the keyboard keys used in the game
+    let aKey = keyboard( 65 );
+    let dKey = keyboard( 68 );
+    let wKey = keyboard( 87 );
+    let sKey = keyboard( 83 );
+    let qKey = keyboard(81);
+    let enterKey = keyboard( 13 );
+    player.x = 0;
+    player.y = 300; 
     
-sKey.press = () => {
-  player.x = player.x + 50;
-    player.y = player.y + 50;
-    //console.log("Player X = " + player.x);
-    //console.log("Player Y = " + player.y);
-};
-    
-dKey.press = () => {
-  player.x = player.x + 50;
-    player.y = player.y + 0;
-    //console.log("Player X = " + player.x);
-    //console.log("Player Y = " + player.y);
-};
+    //instructions for the Q key
+    qKey.press = () => 
+    {
+        player.x = player.x + 50;
+        player.y = player.y - 100;
+    };
+    //instructions for the W key
+    wKey.press = () => 
+    {
+        player.x = player.x + 50;
+        player.y = player.y + 100;
+    };
+    //instructions for the A key
+    aKey.press = () => 
+    {
+        player.x = player.x + 50;
+        player.y = player.y - 50;
+    };
+    //instructions for the S key
+    sKey.press = () => 
+    {
+        player.x = player.x + 50;
+        player.y = player.y + 50;
+    };
+    //instructions for the D key
+    dKey.press = () => 
+    {
+        player.x = player.x + 50;
+        player.y = player.y + 0;
+    };
      
-state = play;
-game.ticker.add( delta => gameLoop( delta ) );
+    state = play;
+    game.ticker.add( delta => gameLoop( delta ) );
 }
 
+//gameLoop function
 function gameLoop( delta )
 {
-state( delta );
+    state( delta );
 }
 
+//play function..called every tick
 function play( delta ) 
 {
-bounds();
-balloonCollider();
-runEverything();
+    bounds();
+    balloonCollider();
+    runEverything();
 }
 
+//function to check if player left the bounds
 function bounds()
 {
-if(player.x < 0 || player.y < 0)
-{
-    window.setTimeout(resetPlayer, 300);
-}
+    if(player.x < 0 || player.y < 0)
+    {
+        window.setTimeout(resetPlayer, 300);
+    }
 if(player.x > 550 || player.y > 500)
-{
-    window.setTimeout(resetPlayer, 300);
-}
+    {
+        window.setTimeout(resetPlayer, 300);
+    }
 }
 
+//function to check if the balloon collided with anything on the screen
 function balloonCollider()
 {
     if(player.y > 350)
@@ -189,9 +192,9 @@ function balloonCollider()
     }
 }
 
+//function to easily reset the player if it crashes with anything or if it goes out of bounds
 function resetPlayer()
 {
-    console.log("player was at" + player.x + ","  + player.y + "so playerReset was called and the death animation popped up");
     player.x = 0;
     player.y = 300;
     game.stage.addChild(gameOver);
@@ -200,12 +203,14 @@ function resetPlayer()
     return;
 }
 
+//function to remove the crash screen
 function removeCrash()
 {
     game.stage.removeChild(gameOver);
     game.stage.addChild(background);
 }
 
+//function used to check what screen you are on and to change the screens
 function runEverything()
 {
     let oneKey = keyboard( 49 );
@@ -213,7 +218,6 @@ function runEverything()
 
     if(player.x == 0 && player.y == 300)
     {
-        console.log("player is at" + player.x + ", " + player.y + "... so we are in the 0,300 if statement");
         oneKey.press = () => 
         {
             game.stage.removeChild(welcomeScreen);
@@ -277,7 +281,6 @@ function runEverything()
     }
     else if(player.x == 0 && player.y == 0)
         {
-    console.log("player is at" + player.x + ", " + player.y + "... so we are in the 0,0 if statement");
             oneKey.press = () => 
             {
                 game.stage.removeChild(welcomeScreenText);
@@ -294,9 +297,9 @@ function runEverything()
 }
 
 
+//function to finish the game
 function finish()
 {
-    console.log("player is at" + player.x + ", " + player.y + "... so we are in the 550,200 if statement");
     game.stage.removeChild(background);
     player.x = 0;
     player.y = 0;
@@ -304,36 +307,38 @@ function finish()
     game.stage.removeChild(player);
     game.stage.removeChild(gameOver);
     welcomeScreenText.position.set(220, 319);
-    //game.stage.addChild(welcomeScreenText);
     return;
 }
 
+//keyboard function used whenever a key is pressed
 function keyboard(keyCode) 
 {
-var key = {};
-key.code = keyCode;
-key.isDown = false;
-key.isUp = true;         
-key.downHandler = event => 
+    var key = {};
+    key.code = keyCode;
+    key.isDown = false;
+    key.isUp = true;         
+    key.downHandler = event => 
 {
-if (event.keyCode == key.code && key.press)
+    if (event.keyCode == key.code && key.press)
 {
-key.press();
-key.isDown = true;
-key.isUp = false;}
-event.preventDefault();};
-key.upHandler = event => 
+    key.press();
+    key.isDown = true;
+    key.isUp = false;}
+        event.preventDefault();
+    };
+    key.upHandler = event => 
 {
 if (event.keyCode == key.code && key.release)
 {
-key.release();
-key.isDown = false;
-key.isUp = true;
+    key.release();
+    key.isDown = false;
+    key.isUp = true;
 }
-event.preventDefault();};
-window.addEventListener("keydown", key.downHandler.bind(key), false);
-window.addEventListener("keyup", key.upHandler.bind(key), false);
-return key;}
+    event.preventDefault();};
+    window.addEventListener("keydown", key.downHandler.bind(key), false);
+    window.addEventListener("keyup", key.upHandler.bind(key), false);
+    return key;
+}
 	
 //Code used for Keyboard Movement:
 //https://github.com/kittykatattack/learningPixi/blob/master/examples/12_keyboardMovement.html
